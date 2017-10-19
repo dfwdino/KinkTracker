@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinkTracker", "KinkTracker\KinkTracker.csproj", "{409E4325-B1C4-4D39-8346-F8CF8B23C0FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "KinkTracker\Web.csproj", "{409E4325-B1C4-4D39-8346-F8CF8B23C0FD}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{409E4325-B1C4-4D39-8346-F8CF8B23C0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{409E4325-B1C4-4D39-8346-F8CF8B23C0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{409E4325-B1C4-4D39-8346-F8CF8B23C0FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9CA7DC3-5EA1-4FC5-824A-07992584ECC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
