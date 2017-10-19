@@ -1,7 +1,3 @@
-﻿CREATE SCHEMA [KT]
+﻿CREATE SCHEMA [Web]
     AUTHORIZATION [dbo];
-
-
-
-
 

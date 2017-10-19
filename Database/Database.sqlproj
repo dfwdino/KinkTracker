@@ -62,10 +62,26 @@
     <Folder Include="KT\" />
     <Folder Include="KT\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="Web\" />
+    <Folder Include="Web\Tables\" />
+    <Folder Include="Contract\" />
+    <Folder Include="Contract\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="KT\Tables\Logs.sql" />
     <Build Include="KT\Tables\Schemas.sql" />
     <Build Include="Security\KT.sql" />
+    <Build Include="KT\Tables\Users.sql" />
+    <Build Include="Web\Tables\KinkRoles.sql" />
+    <Build Include="Security\Web.sql" />
+    <Build Include="KT\Tables\UserOwners.sql" />
+    <Build Include="Contract\Tables\Entries.sql" />
+    <Build Include="Contract\Tables\Contracts.sql" />
+    <Build Include="Contract\Tables\CategoryOwners.sql" />
+    <Build Include="Contract\Tables\Categories.sql" />
+    <Build Include="Security\Contract.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AgainToProject.scmp" />
   </ItemGroup>
 </Project>
