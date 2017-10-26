@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KinkTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryOwners">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="UsersID" Type="int" />
+        </EntityType>
+        <EntityType Name="Contracts">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Entries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Entry" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreateByID" Type="int" Nullable="false" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Broswer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Long" Type="float" />
+        </EntityType>
+        <EntityType Name="PagedViews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="20" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionParameters" Type="nvarchar(max)" />
+          <Property Name="AbsoluteUri" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Schemas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="Role" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserOwners">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="DomID" Type="int" />
+          <Property Name="SubID" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="FristName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KinkName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KinkRoleID" Type="int" Nullable="false" />
+          <Property Name="KTRoleID" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KinkRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Entries_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Entries" Type="Self.Entries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Entries">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TitleOwners_Titles">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="CategoryOwners" Type="Self.CategoryOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CategoryOwners">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TitleOwners_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="CategoryOwners" Type="Self.CategoryOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CategoryOwners">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_UserOwners-SubID">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="SubID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_Users-DomID">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="DomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_KinkRoles">
+          <End Role="KinkRoles" Type="Self.KinkRoles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KinkRoles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="KinkRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Schemas">
+          <End Role="Schemas" Type="Self.Schemas" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schemas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="KTRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KinkTrackerModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="Contract" store:Type="Tables" />
+          <EntitySet Name="CategoryOwners" EntityType="Self.CategoryOwners" Schema="Contract" store:Type="Tables" />
+          <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="Contract" store:Type="Tables" />
+          <EntitySet Name="Entries" EntityType="Self.Entries" Schema="Contract" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="KT" store:Type="Tables" />
+          <EntitySet Name="PagedViews" EntityType="Self.PagedViews" Schema="KT" store:Type="Tables" />
+          <EntitySet Name="Schemas" EntityType="Self.Schemas" Schema="KT" store:Type="Tables" />
+          <EntitySet Name="UserOwners" EntityType="Self.UserOwners" Schema="KT" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="KT" store:Type="Tables" />
+          <EntitySet Name="KinkRoles" EntityType="Self.KinkRoles" Schema="Web" store:Type="Tables" />
+          <AssociationSet Name="FK_Entries_Users" Association="Self.FK_Entries_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Entries" EntitySet="Entries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TitleOwners_Titles" Association="Self.FK_TitleOwners_Titles">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategoryOwners" EntitySet="CategoryOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TitleOwners_Users" Association="Self.FK_TitleOwners_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CategoryOwners" EntitySet="CategoryOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UserOwners-SubID" Association="Self.FK_UserOwners_UserOwners-SubID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_Users-DomID" Association="Self.FK_UserOwners_Users-DomID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_KinkRoles" Association="Self.FK_Users_KinkRoles">
+            <End Role="KinkRoles" EntitySet="KinkRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Schemas" Association="Self.FK_Users_Schemas">
+            <End Role="Schemas" EntitySet="Schemas" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KinkTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="Category1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryOwners" Relationship="Self.FK_TitleOwners_Titles" FromRole="Categories" ToRole="CategoryOwners" />
+        </EntityType>
+        <EntityType Name="CategoryOwner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="UsersID" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_TitleOwners_Titles" FromRole="CategoryOwners" ToRole="Categories" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TitleOwners_Users" FromRole="CategoryOwners" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Entry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Entry1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Entries_Users" FromRole="Entries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateByID" Type="Int32" Nullable="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Broswer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Long" Type="Double" />
+        </EntityType>
+        <EntityType Name="PagedView">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AbsoluteUri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="Role" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Schemas" FromRole="Schemas" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserOwner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="DomID" Type="Int32" />
+          <Property Name="SubID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserOwners_UserOwners_SubID" FromRole="UserOwners" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_UserOwners_Users_DomID" FromRole="UserOwners" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="FristName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KinkName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KinkRoleID" Type="Int32" Nullable="false" />
+          <Property Name="KTRoleID" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryOwners" Relationship="Self.FK_TitleOwners_Users" FromRole="Users" ToRole="CategoryOwners" />
+          <NavigationProperty Name="Entries" Relationship="Self.FK_Entries_Users" FromRole="Users" ToRole="Entries" />
+          <NavigationProperty Name="Schema" Relationship="Self.FK_Users_Schemas" FromRole="Users" ToRole="Schemas" />
+          <NavigationProperty Name="UserOwners" Relationship="Self.FK_UserOwners_UserOwners_SubID" FromRole="Users" ToRole="UserOwners" />
+          <NavigationProperty Name="UserOwners1" Relationship="Self.FK_UserOwners_Users_DomID" FromRole="Users" ToRole="UserOwners" />
+          <NavigationProperty Name="KinkRole" Relationship="Self.FK_Users_KinkRoles" FromRole="Users" ToRole="KinkRoles" />
+        </EntityType>
+        <EntityType Name="KinkRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_KinkRoles" FromRole="KinkRoles" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_TitleOwners_Titles">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="CategoryOwners" Type="Self.CategoryOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CategoryOwners">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TitleOwners_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="CategoryOwners" Type="Self.CategoryOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CategoryOwners">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entries_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Entries" Type="Self.Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Entries">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Schemas">
+          <End Role="Schemas" Type="Self.Schema" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schemas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="KTRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_UserOwners_SubID">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="SubID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_Users_DomID">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="DomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_KinkRoles">
+          <End Role="KinkRoles" Type="Self.KinkRole" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KinkRoles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="KinkRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KinkTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CategoryOwners" EntityType="Self.CategoryOwner" />
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <EntitySet Name="Entries" EntityType="Self.Entry" />
+          <EntitySet Name="Logs" EntityType="Self.Log" />
+          <EntitySet Name="PagedViews" EntityType="Self.PagedView" />
+          <EntitySet Name="Schemas" EntityType="Self.Schema" />
+          <EntitySet Name="UserOwners" EntityType="Self.UserOwner" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="KinkRoles" EntityType="Self.KinkRole" />
+          <AssociationSet Name="FK_TitleOwners_Titles" Association="Self.FK_TitleOwners_Titles">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CategoryOwners" EntitySet="CategoryOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TitleOwners_Users" Association="Self.FK_TitleOwners_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CategoryOwners" EntitySet="CategoryOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entries_Users" Association="Self.FK_Entries_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Entries" EntitySet="Entries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Schemas" Association="Self.FK_Users_Schemas">
+            <End Role="Schemas" EntitySet="Schemas" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UserOwners_SubID" Association="Self.FK_UserOwners_UserOwners_SubID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_Users_DomID" Association="Self.FK_UserOwners_Users_DomID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_KinkRoles" Association="Self.FK_Users_KinkRoles">
+            <End Role="KinkRoles" EntitySet="KinkRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KinkTrackerModelStoreContainer" CdmEntityContainer="KinkTrackerEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="KinkTrackerModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Category1" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryOwners">
+            <EntityTypeMapping TypeName="KinkTrackerModel.CategoryOwner">
+              <MappingFragment StoreEntitySet="CategoryOwners">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="KinkTrackerModel.Contract">
+              <MappingFragment StoreEntitySet="Contracts">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entries">
+            <EntityTypeMapping TypeName="KinkTrackerModel.Entry">
+              <MappingFragment StoreEntitySet="Entries">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Entry1" ColumnName="Entry" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="KinkTrackerModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreateByID" ColumnName="CreateByID" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Broswer" ColumnName="Broswer" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagedViews">
+            <EntityTypeMapping TypeName="KinkTrackerModel.PagedView">
+              <MappingFragment StoreEntitySet="PagedViews">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ActionParameters" ColumnName="ActionParameters" />
+                <ScalarProperty Name="AbsoluteUri" ColumnName="AbsoluteUri" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schemas">
+            <EntityTypeMapping TypeName="KinkTrackerModel.Schema">
+              <MappingFragment StoreEntitySet="Schemas">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOwners">
+            <EntityTypeMapping TypeName="KinkTrackerModel.UserOwner">
+              <MappingFragment StoreEntitySet="UserOwners">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="DomID" ColumnName="DomID" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="KinkTrackerModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="FristName" ColumnName="FristName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="KinkName" ColumnName="KinkName" />
+                <ScalarProperty Name="KinkRoleID" ColumnName="KinkRoleID" />
+                <ScalarProperty Name="KTRoleID" ColumnName="KTRoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KinkRoles">
+            <EntityTypeMapping TypeName="KinkTrackerModel.KinkRole">
+              <MappingFragment StoreEntitySet="KinkRoles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

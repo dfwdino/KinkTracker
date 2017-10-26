@@ -1,0 +1,23 @@
+﻿@model Web.User
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(m => m.Latitude)
+    @Html.HiddenFor(m => m.Longitude)
+
+    @Html.LabelFor(m => m.KinkName)
+    @Html.TextBoxFor(m => m.KinkName)
+
+
+    @Html.LabelFor(m => m.Password)
+    @Html.TextBoxFor(m => m.Password)
+}
