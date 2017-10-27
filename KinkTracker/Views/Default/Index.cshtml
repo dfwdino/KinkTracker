@@ -1,23 +1,42 @@
-﻿@model Web.User
+﻿@using System.Web.Optimization
+
+@model Web.User
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sign In";
 }
 
-<h2>Index</h2>
+<div style="padding-top:30px" />
 
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary()
 
-    @Html.HiddenFor(m => m.Latitude)
-    @Html.HiddenFor(m => m.Longitude)
-
-    @Html.LabelFor(m => m.KinkName)
-    @Html.TextBoxFor(m => m.KinkName)
-
-
-    @Html.LabelFor(m => m.Password)
-    @Html.TextBoxFor(m => m.Password)
+    <div class="row">
+        <div class="col-lg-1">
+            @Html.LabelFor(m => m.KinkName)
+        </div>
+        <div class="col-lg-1">
+            @Html.TextBoxFor(m => m.KinkName)
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-1">
+            @Html.LabelFor(m => m.Password)
+        </div>
+        <div class="col-lg-1">
+            @Html.TextBoxFor(m => m.Password)
+        </div>
+    </div>
+    <br />
+    <div style="padding-right: 10px"><input type="submit" value="Submit" class="btn btn-default" name="ActionRegister" /></div>
 }
+
+<br /><br />
+@Html.ActionLink("Sign up", "SignUp")
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryUI")
+@Scripts.Render("~/bundles/bootstrap")

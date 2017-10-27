@@ -144,6 +144,42 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Sub\Views\web.config" />
+    <Content Include="Areas\Dom\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Schemas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Schemas\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Schemas\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Schemas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Schemas\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KinkRoles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KinkRoles\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KinkRoles\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KinkRoles\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KinkRoles\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PagedViews\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PagedViews\Index.cshtml" />
+    <Content Include="Areas\Dom\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Dom\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Dom\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Dom\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Dom\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Dom\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Dom\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\Dom\Views\Contracts\Create.cshtml" />
+    <Content Include="Areas\Dom\Views\Contracts\Delete.cshtml" />
+    <Content Include="Areas\Dom\Views\Contracts\Details.cshtml" />
+    <Content Include="Areas\Dom\Views\Contracts\Edit.cshtml" />
+    <Content Include="Areas\Dom\Views\Contracts\Index.cshtml" />
+    <Content Include="Areas\Dom\Views\Entries\Create.cshtml" />
+    <Content Include="Areas\Dom\Views\Entries\Delete.cshtml" />
+    <Content Include="Areas\Dom\Views\Entries\Details.cshtml" />
+    <Content Include="Areas\Dom\Views\Entries\Edit.cshtml" />
+    <Content Include="Areas\Dom\Views\Entries\Index.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -157,12 +193,23 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\KinkRolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SchemasController.cs" />
+    <Compile Include="Areas\Admin\LogsController.cs" />
+    <Compile Include="Areas\Admin\PagedViewsController.cs" />
+    <Compile Include="Areas\Dom\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Dom\Controllers\ContractsController.cs" />
+    <Compile Include="Areas\Dom\Controllers\EntriesController.cs" />
+    <Compile Include="Areas\Dom\DomAreaRegistration.cs" />
+    <Compile Include="Areas\Sub\SubAreaRegistration.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CategoryOwner.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Content\Logger.cs" />
     <Compile Include="Contract.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
     </Compile>
@@ -233,6 +280,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Dom\Models\" />
+    <Folder Include="Areas\Sub\Controllers\" />
+    <Folder Include="Areas\Sub\Models\" />
+    <Folder Include="Areas\Sub\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\BundleConfig\" />
     <Folder Include="Views\PageView\" />
