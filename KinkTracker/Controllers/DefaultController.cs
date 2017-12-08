@@ -23,20 +23,19 @@ namespace Web.Controllers
 
             User foundUser = kte.Users.Where(m => m.KinkName == user.KinkName && m.Password == user.Password).FirstOrDefault();
 
-            if (foundUser != null) {
-            
-            if(user.Schema.Role.Equals("Admin"))
-                RedirectToRoute("", "");
-            else if(user.KinkRole.Role.Equals("Dom"))
-                RedirectToRoute("", "");
-            else if (user.KinkRole.Role.Equals("Sub"))
-                RedirectToRoute("", "");
-
+            if (foundUser != null)
+            {
+                if (foundUser.Schema.Role.Equals("Admin"))
+                    return RedirectToAction("Index","Default", new { area = "Admin", id=foundUser.ID});
+                else if (foundUser.KinkRole.Role.Equals("Dom"))
+                    return RedirectToRoute("", "");
+                else if (foundUser.KinkRole.Role.Equals("Sub"))
+                    return RedirectToRoute("", "");
             }
 
-            throw new HttpException("Can't find user.");
-
-            return View(user);
+            ModelState.AddModelError("KinkName", "Can not find user or password is invalid.");
+            
+            return View(foundUser);
         }
 
     }

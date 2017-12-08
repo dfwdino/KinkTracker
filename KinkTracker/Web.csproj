@@ -180,6 +180,7 @@
     <Content Include="Areas\Dom\Views\Entries\Details.cshtml" />
     <Content Include="Areas\Dom\Views\Entries\Edit.cshtml" />
     <Content Include="Areas\Dom\Views\Entries\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Default\Index.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -194,6 +195,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Admin\Controllers\KinkRolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SchemasController.cs" />
     <Compile Include="Areas\Admin\LogsController.cs" />
