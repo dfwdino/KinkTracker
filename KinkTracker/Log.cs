@@ -14,6 +14,13 @@ namespace Web
     
     public partial class Log
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Log()
+        {
+            this.Contracts = new HashSet<Contract>();
+            this.ContractToEntries = new HashSet<ContractToEntry>();
+        }
+    
         public int ID { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public int CreateByID { get; set; }
@@ -23,5 +30,10 @@ namespace Web
         public string Broswer { get; set; }
         public Nullable<double> Lat { get; set; }
         public Nullable<double> Long { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ContractToEntry> ContractToEntries { get; set; }
     }
 }

@@ -35,5 +35,6 @@ namespace Web
         public virtual DbSet<UserOwner> UserOwners { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<KinkRole> KinkRoles { get; set; }
+        public virtual DbSet<ContractToEntry> ContractToEntries { get; set; }
     }
 }

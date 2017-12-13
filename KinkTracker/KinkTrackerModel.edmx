@@ -31,6 +31,17 @@
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+          <Property Name="AssignedToID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContractToEntries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogID" Type="int" />
+          <Property Name="ContractID" Type="int" Nullable="false" />
+          <Property Name="EntryID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Entries">
           <Key>
@@ -85,6 +96,10 @@
           <Property Name="LogID" Type="int" />
           <Property Name="DomID" Type="int" />
           <Property Name="SubID" Type="int" />
+          <Property Name="RequestByID" Type="int" />
+          <Property Name="ApprovedByID" Type="int" />
+          <Property Name="RequestTime" Type="datetime" />
+          <Property Name="ApprovedTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -107,6 +122,78 @@
           <Property Name="LogID" Type="int" />
           <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Contracts_Logs">
+          <End Role="Logs" Type="Self.Logs" Multiplicity="0..1" />
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Users_AssignedTo">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="AssignedToID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Users_Owner">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Contracts">
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="1" />
+          <End Role="ContractToEntries" Type="Self.ContractToEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contracts">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntries">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Entries">
+          <End Role="Entries" Type="Self.Entries" Multiplicity="1" />
+          <End Role="ContractToEntries" Type="Self.ContractToEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entries">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntries">
+              <PropertyRef Name="EntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Logs">
+          <End Role="Logs" Type="Self.Logs" Multiplicity="0..1" />
+          <End Role="ContractToEntries" Type="Self.ContractToEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntries">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Entries_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Entries" Type="Self.Entries" Multiplicity="*" />
@@ -155,6 +242,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserOwners_UsersApprovedBy">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="ApprovedByID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserOwners_Users-DomID">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UserOwners" Type="Self.UserOwners" Multiplicity="*" />
@@ -164,6 +263,18 @@
             </Principal>
             <Dependent Role="UserOwners">
               <PropertyRef Name="DomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_UsersRequestBy">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserOwners" Type="Self.UserOwners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwners">
+              <PropertyRef Name="RequestByID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -195,6 +306,7 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="Contract" store:Type="Tables" />
           <EntitySet Name="CategoryOwners" EntityType="Self.CategoryOwners" Schema="Contract" store:Type="Tables" />
           <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="Contract" store:Type="Tables" />
+          <EntitySet Name="ContractToEntries" EntityType="Self.ContractToEntries" Schema="Contract" store:Type="Tables" />
           <EntitySet Name="Entries" EntityType="Self.Entries" Schema="Contract" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="KT" store:Type="Tables" />
           <EntitySet Name="PagedViews" EntityType="Self.PagedViews" Schema="KT" store:Type="Tables" />
@@ -202,6 +314,30 @@
           <EntitySet Name="UserOwners" EntityType="Self.UserOwners" Schema="KT" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="KT" store:Type="Tables" />
           <EntitySet Name="KinkRoles" EntityType="Self.KinkRoles" Schema="Web" store:Type="Tables" />
+          <AssociationSet Name="FK_Contracts_Logs" Association="Self.FK_Contracts_Logs">
+            <End Role="Logs" EntitySet="Logs" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Users_AssignedTo" Association="Self.FK_Contracts_Users_AssignedTo">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Users_Owner" Association="Self.FK_Contracts_Users_Owner">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Contracts" Association="Self.FK_ContractToEntries_Contracts">
+            <End Role="Contracts" EntitySet="Contracts" />
+            <End Role="ContractToEntries" EntitySet="ContractToEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Entries" Association="Self.FK_ContractToEntries_Entries">
+            <End Role="Entries" EntitySet="Entries" />
+            <End Role="ContractToEntries" EntitySet="ContractToEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Logs" Association="Self.FK_ContractToEntries_Logs">
+            <End Role="Logs" EntitySet="Logs" />
+            <End Role="ContractToEntries" EntitySet="ContractToEntries" />
+          </AssociationSet>
           <AssociationSet Name="FK_Entries_Users" Association="Self.FK_Entries_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Entries" EntitySet="Entries" />
@@ -218,7 +354,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserOwners" EntitySet="UserOwners" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UsersApprovedBy" Association="Self.FK_UserOwners_UsersApprovedBy">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserOwners_Users-DomID" Association="Self.FK_UserOwners_Users-DomID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserOwners" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UsersRequestBy" Association="Self.FK_UserOwners_UsersRequestBy">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserOwners" EntitySet="UserOwners" />
           </AssociationSet>
@@ -264,6 +408,12 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <Property Name="AssignedToID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Log" Relationship="KinkTrackerModel.FK_Contracts_Logs" FromRole="Contract" ToRole="Log" />
+          <NavigationProperty Name="AssignedTo" Relationship="KinkTrackerModel.FK_Contracts_Users_AssignedTo" FromRole="Contract" ToRole="User" />
+          <NavigationProperty Name="Owner" Relationship="KinkTrackerModel.FK_Contracts_Users_Owner" FromRole="Contract" ToRole="User" />
+          <NavigationProperty Name="ContractToEntries" Relationship="KinkTrackerModel.FK_ContractToEntries_Contracts" FromRole="Contract" ToRole="ContractToEntry" />
         </EntityType>
         <EntityType Name="Entry">
           <Key>
@@ -275,6 +425,7 @@
           <Property Name="Entry1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Entries_Users" FromRole="Entries" ToRole="Users" />
+          <NavigationProperty Name="ContractToEntries" Relationship="KinkTrackerModel.FK_ContractToEntries_Entries" FromRole="Entry" ToRole="ContractToEntry" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -289,6 +440,8 @@
           <Property Name="Broswer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Lat" Type="Double" />
           <Property Name="Long" Type="Double" />
+          <NavigationProperty Name="Contracts" Relationship="KinkTrackerModel.FK_Contracts_Logs" FromRole="Log" ToRole="Contract" />
+          <NavigationProperty Name="ContractToEntries" Relationship="KinkTrackerModel.FK_ContractToEntries_Logs" FromRole="Log" ToRole="ContractToEntry" />
         </EntityType>
         <EntityType Name="PagedView">
           <Key>
@@ -322,6 +475,12 @@
           <Property Name="SubID" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserOwners_UserOwners_SubID" FromRole="UserOwners" ToRole="Users" />
           <NavigationProperty Name="User1" Relationship="Self.FK_UserOwners_Users_DomID" FromRole="UserOwners" ToRole="Users" />
+          <Property Name="RequestByID" Type="Int32" />
+          <Property Name="ApprovedByID" Type="Int32" />
+          <Property Name="RequestTime" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User11" Relationship="KinkTrackerModel.FK_UserOwners_UsersApprovedBy" FromRole="UserOwner" ToRole="User" />
+          <NavigationProperty Name="User3" Relationship="KinkTrackerModel.FK_UserOwners_UsersRequestBy" FromRole="UserOwner" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -341,6 +500,10 @@
           <NavigationProperty Name="UserOwners" Relationship="Self.FK_UserOwners_UserOwners_SubID" FromRole="Users" ToRole="UserOwners" />
           <NavigationProperty Name="UserOwners1" Relationship="Self.FK_UserOwners_Users_DomID" FromRole="Users" ToRole="UserOwners" />
           <NavigationProperty Name="KinkRole" Relationship="Self.FK_Users_KinkRoles" FromRole="Users" ToRole="KinkRoles" />
+          <NavigationProperty Name="Contracts" Relationship="KinkTrackerModel.FK_Contracts_Users_AssignedTo" FromRole="User" ToRole="Contract" />
+          <NavigationProperty Name="Contracts1" Relationship="KinkTrackerModel.FK_Contracts_Users_Owner" FromRole="User" ToRole="Contract" />
+          <NavigationProperty Name="UserOwners11" Relationship="KinkTrackerModel.FK_UserOwners_UsersApprovedBy" FromRole="User" ToRole="UserOwner" />
+          <NavigationProperty Name="UserOwners3" Relationship="KinkTrackerModel.FK_UserOwners_UsersRequestBy" FromRole="User" ToRole="UserOwner" />
         </EntityType>
         <EntityType Name="KinkRole">
           <Key>
@@ -474,7 +637,148 @@
             <End Role="KinkRoles" EntitySet="KinkRoles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ContractToEntries" EntityType="KinkTrackerModel.ContractToEntry" />
+          <AssociationSet Name="FK_Contracts_Logs" Association="KinkTrackerModel.FK_Contracts_Logs">
+            <End Role="Log" EntitySet="Logs" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Users_AssignedTo" Association="KinkTrackerModel.FK_Contracts_Users_AssignedTo">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Users_Owner" Association="KinkTrackerModel.FK_Contracts_Users_Owner">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Contracts" Association="KinkTrackerModel.FK_ContractToEntries_Contracts">
+            <End Role="Contract" EntitySet="Contracts" />
+            <End Role="ContractToEntry" EntitySet="ContractToEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Entries" Association="KinkTrackerModel.FK_ContractToEntries_Entries">
+            <End Role="Entry" EntitySet="Entries" />
+            <End Role="ContractToEntry" EntitySet="ContractToEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContractToEntries_Logs" Association="KinkTrackerModel.FK_ContractToEntries_Logs">
+            <End Role="Log" EntitySet="Logs" />
+            <End Role="ContractToEntry" EntitySet="ContractToEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UsersApprovedBy" Association="KinkTrackerModel.FK_UserOwners_UsersApprovedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserOwner" EntitySet="UserOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOwners_UsersRequestBy" Association="KinkTrackerModel.FK_UserOwners_UsersRequestBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserOwner" EntitySet="UserOwners" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ContractToEntry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogID" Type="Int32" />
+          <Property Name="ContractID" Type="Int32" Nullable="false" />
+          <Property Name="EntryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contract" Relationship="KinkTrackerModel.FK_ContractToEntries_Contracts" FromRole="ContractToEntry" ToRole="Contract" />
+          <NavigationProperty Name="Entry" Relationship="KinkTrackerModel.FK_ContractToEntries_Entries" FromRole="ContractToEntry" ToRole="Entry" />
+          <NavigationProperty Name="Log" Relationship="KinkTrackerModel.FK_ContractToEntries_Logs" FromRole="ContractToEntry" ToRole="Log" />
+        </EntityType>
+        <Association Name="FK_Contracts_Logs">
+          <End Type="KinkTrackerModel.Log" Role="Log" Multiplicity="0..1" />
+          <End Type="KinkTrackerModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Users_AssignedTo">
+          <End Type="KinkTrackerModel.User" Role="User" Multiplicity="1" />
+          <End Type="KinkTrackerModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="AssignedToID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Users_Owner">
+          <End Type="KinkTrackerModel.User" Role="User" Multiplicity="1" />
+          <End Type="KinkTrackerModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Contracts">
+          <End Type="KinkTrackerModel.Contract" Role="Contract" Multiplicity="1" />
+          <End Type="KinkTrackerModel.ContractToEntry" Role="ContractToEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntry">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Entries">
+          <End Type="KinkTrackerModel.Entry" Role="Entry" Multiplicity="1" />
+          <End Type="KinkTrackerModel.ContractToEntry" Role="ContractToEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntry">
+              <PropertyRef Name="EntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContractToEntries_Logs">
+          <End Type="KinkTrackerModel.Log" Role="Log" Multiplicity="0..1" />
+          <End Type="KinkTrackerModel.ContractToEntry" Role="ContractToEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ContractToEntry">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_UsersApprovedBy">
+          <End Type="KinkTrackerModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="KinkTrackerModel.UserOwner" Role="UserOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwner">
+              <PropertyRef Name="ApprovedByID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOwners_UsersRequestBy">
+          <End Type="KinkTrackerModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="KinkTrackerModel.UserOwner" Role="UserOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOwner">
+              <PropertyRef Name="RequestByID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -503,6 +807,8 @@
           <EntitySetMapping Name="Contracts">
             <EntityTypeMapping TypeName="KinkTrackerModel.Contract">
               <MappingFragment StoreEntitySet="Contracts">
+                <ScalarProperty Name="AssignedToID" ColumnName="AssignedToID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -563,6 +869,10 @@
           <EntitySetMapping Name="UserOwners">
             <EntityTypeMapping TypeName="KinkTrackerModel.UserOwner">
               <MappingFragment StoreEntitySet="UserOwners">
+                <ScalarProperty Name="ApprovedTime" ColumnName="ApprovedTime" />
+                <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
+                <ScalarProperty Name="ApprovedByID" ColumnName="ApprovedByID" />
+                <ScalarProperty Name="RequestByID" ColumnName="RequestByID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
                 <ScalarProperty Name="DomID" ColumnName="DomID" />
@@ -590,6 +900,16 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContractToEntries">
+            <EntityTypeMapping TypeName="KinkTrackerModel.ContractToEntry">
+              <MappingFragment StoreEntitySet="ContractToEntries">
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

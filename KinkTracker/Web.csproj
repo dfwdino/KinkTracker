@@ -221,7 +221,11 @@
     <Compile Include="Contract.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ContractToEntry.cs">
+      <DependentUpon>KinkTrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\PageViewAttribute.cs" />
     <Compile Include="Entry.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
@@ -279,6 +283,7 @@
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -293,6 +298,7 @@
     <Folder Include="Areas\Sub\Models\" />
     <Folder Include="Models\" />
     <Folder Include="Views\BundleConfig\" />
+    <Folder Include="Views\Link\" />
     <Folder Include="Views\PageView\" />
   </ItemGroup>
   <ItemGroup>

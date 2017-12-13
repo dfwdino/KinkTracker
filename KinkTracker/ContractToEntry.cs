@@ -12,20 +12,15 @@ namespace Web
     using System;
     using System.Collections.Generic;
     
-    public partial class UserOwner
+    public partial class ContractToEntry
     {
         public int ID { get; set; }
         public Nullable<int> LogID { get; set; }
-        public Nullable<int> DomID { get; set; }
-        public Nullable<int> SubID { get; set; }
-        public Nullable<int> RequestByID { get; set; }
-        public Nullable<int> ApprovedByID { get; set; }
-        public Nullable<System.DateTime> RequestTime { get; set; }
-        public Nullable<System.DateTime> ApprovedTime { get; set; }
+        public int ContractID { get; set; }
+        public int EntryID { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual User User11 { get; set; }
-        public virtual User User3 { get; set; }
+        public virtual Contract Contract { get; set; }
+        public virtual Entry Entry { get; set; }
+        public virtual Log Log { get; set; }
     }
 }

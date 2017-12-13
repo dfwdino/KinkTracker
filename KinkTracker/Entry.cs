@@ -14,6 +14,12 @@ namespace Web
     
     public partial class Entry
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Entry()
+        {
+            this.ContractToEntries = new HashSet<ContractToEntry>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> LogID { get; set; }
         public string Title { get; set; }
@@ -21,5 +27,7 @@ namespace Web
         public int OwnerID { get; set; }
     
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ContractToEntry> ContractToEntries { get; set; }
     }
 }

@@ -21,6 +21,10 @@ namespace Web
             this.Entries = new HashSet<Entry>();
             this.UserOwners = new HashSet<UserOwner>();
             this.UserOwners1 = new HashSet<UserOwner>();
+            this.Contracts = new HashSet<Contract>();
+            this.Contracts1 = new HashSet<Contract>();
+            this.UserOwners11 = new HashSet<UserOwner>();
+            this.UserOwners3 = new HashSet<UserOwner>();
         }
     
         public int ID { get; set; }
@@ -42,5 +46,13 @@ namespace Web
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOwner> UserOwners1 { get; set; }
         public virtual KinkRole KinkRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contract> Contracts1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserOwner> UserOwners11 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserOwner> UserOwners3 { get; set; }
     }
 }

@@ -14,10 +14,24 @@ namespace Web
     
     public partial class Contract
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Contract()
+        {
+            this.ContractToEntries = new HashSet<ContractToEntry>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> LogID { get; set; }
         public System.DateTime StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Title { get; set; }
+        public int OwnerID { get; set; }
+        public int AssignedToID { get; set; }
+    
+        public virtual Log Log { get; set; }
+        public virtual User AssignedTo { get; set; }
+        public virtual User Owner { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ContractToEntry> ContractToEntries { get; set; }
     }
 }
