@@ -181,6 +181,10 @@
     <Content Include="Areas\Dom\Views\Entries\Edit.cshtml" />
     <Content Include="Areas\Dom\Views\Entries\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Default\Index.cshtml" />
+    <Content Include="Areas\Sub\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Sub\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Sub\Views\Default\Index.cshtml" />
+    <Content Include="Areas\Dom\Views\Default\Index.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -202,8 +206,10 @@
     <Compile Include="Areas\Admin\PagedViewsController.cs" />
     <Compile Include="Areas\Dom\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Dom\Controllers\ContractsController.cs" />
+    <Compile Include="Areas\Dom\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Dom\Controllers\EntriesController.cs" />
     <Compile Include="Areas\Dom\DomAreaRegistration.cs" />
+    <Compile Include="Areas\Sub\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Sub\SubAreaRegistration.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>KinkTrackerModel.tt</DependentUpon>
@@ -284,9 +290,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Dom\Models\" />
-    <Folder Include="Areas\Sub\Controllers\" />
     <Folder Include="Areas\Sub\Models\" />
-    <Folder Include="Areas\Sub\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\BundleConfig\" />
     <Folder Include="Views\PageView\" />

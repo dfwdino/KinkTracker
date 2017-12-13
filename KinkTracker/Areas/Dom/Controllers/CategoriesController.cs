@@ -48,9 +48,25 @@ namespace Web.Areas.Dom.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,LogID,Category1")] Category category)
         {
+  
+
             if (ModelState.IsValid)
             {
-                category.LogID = new Web.Content.Logger().CreateLog(0, Request.UserAgent, null, null);
+                //category.LogID = new Web.Content.Logger().CreateLog(0, Request.UserAgent, null, null);
+
+                Log log = new Log();
+
+                log.Broswer = Request.UserAgent;
+                log.CreateByID = 0;
+                log.CreatedOn = DateTime.UtcNow;
+                log.IPAddress = "";
+                log.NewValue = "New Cat";
+
+                db.Logs.Add(log);
+                db.SaveChanges();
+
+                category.LogID = log.ID;
+
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");

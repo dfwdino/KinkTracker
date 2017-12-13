@@ -28,9 +28,9 @@ namespace Web.Controllers
                 if (foundUser.Schema.Role.Equals("Admin"))
                     return RedirectToAction("Index","Default", new { area = "Admin", id=foundUser.ID});
                 else if (foundUser.KinkRole.Role.Equals("Dom"))
-                    return RedirectToRoute("", "");
+                    return RedirectToAction("Index", "Default",new { area = "Dom", id = foundUser.ID });
                 else if (foundUser.KinkRole.Role.Equals("Sub"))
-                    return RedirectToRoute("", "");
+                    return RedirectToAction("Index", "Default", new { area = "Sub", id = foundUser.ID });
             }
 
             ModelState.AddModelError("KinkName", "Can not find user or password is invalid.");
