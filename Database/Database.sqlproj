@@ -80,6 +80,8 @@
     <Build Include="Contract\Tables\CategoryOwners.sql" />
     <Build Include="Contract\Tables\Categories.sql" />
     <Build Include="Security\Contract.sql" />
+    <Build Include="KT\Tables\PagedViews.sql" />
+    <Build Include="Contract\Tables\ContractToEntries.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AgainToProject.scmp" />

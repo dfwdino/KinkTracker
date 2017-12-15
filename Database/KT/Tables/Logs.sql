@@ -5,9 +5,11 @@
     [OldValue]   NVARCHAR (MAX) NULL,
     [NewValue]   NVARCHAR (MAX) NOT NULL,
     [IPAddress]  NVARCHAR (50)  NOT NULL,
-    [Broswer]    NVARCHAR (50)  NOT NULL,
+    [Broswer]    NVARCHAR (255) NOT NULL,
     [Lat]        FLOAT (53)     NULL,
     [Long]       FLOAT (53)     NULL,
     CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

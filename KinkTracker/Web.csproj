@@ -284,6 +284,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Link\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -298,7 +299,6 @@
     <Folder Include="Areas\Sub\Models\" />
     <Folder Include="Models\" />
     <Folder Include="Views\BundleConfig\" />
-    <Folder Include="Views\Link\" />
     <Folder Include="Views\PageView\" />
   </ItemGroup>
   <ItemGroup>
