@@ -43,7 +43,9 @@ namespace Web.Controllers
             kte.UserOwners.Add(UO);
             kte.SaveChanges();
 
-            return View("Invite Sent if user is valid.");
+            string mesage = "Invite Sent if user is valid.";
+
+            return View();
         }
     }
 }

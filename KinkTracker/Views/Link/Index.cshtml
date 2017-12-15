@@ -4,8 +4,8 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-@if(Model!=null)
+
+@if(Model != null)
 {
 <p>@Model</p>
 }
@@ -14,8 +14,7 @@ else{
 using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    
+
     <div class="form-horizontal">
         <h4>User</h4>
         <hr />
