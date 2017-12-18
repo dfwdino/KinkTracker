@@ -4,12 +4,22 @@
     ViewBag.Title = "Create";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+<script src="~/Scripts/tinymce/tinymce.js"></script>
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Entry</h4>
         <hr />
@@ -33,7 +43,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Entry1, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Entry1, new { htmlAttributes = new { @class = "form-control" } })
+                
+                @Html.TextAreaFor(model => model.Entry1, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Entry1, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,3 +68,12 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+</html>
+<script>
+    tinymce.init({
+        selector: '#Entry1'
+});
+
+
+</script>

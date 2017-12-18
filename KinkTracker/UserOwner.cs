@@ -22,6 +22,7 @@ namespace Web
         public Nullable<int> ApprovedByID { get; set; }
         public Nullable<System.DateTime> RequestTime { get; set; }
         public Nullable<System.DateTime> ApprovedTime { get; set; }
+        public Nullable<int> Rejected { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

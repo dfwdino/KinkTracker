@@ -100,6 +100,7 @@
           <Property Name="ApprovedByID" Type="int" />
           <Property Name="RequestTime" Type="datetime" />
           <Property Name="ApprovedTime" Type="datetime" />
+          <Property Name="Rejected" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -481,6 +482,7 @@
           <Property Name="ApprovedTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User11" Relationship="KinkTrackerModel.FK_UserOwners_UsersApprovedBy" FromRole="UserOwner" ToRole="User" />
           <NavigationProperty Name="User3" Relationship="KinkTrackerModel.FK_UserOwners_UsersRequestBy" FromRole="UserOwner" ToRole="User" />
+          <Property Name="Rejected" Type="Int32" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -869,6 +871,7 @@
           <EntitySetMapping Name="UserOwners">
             <EntityTypeMapping TypeName="KinkTrackerModel.UserOwner">
               <MappingFragment StoreEntitySet="UserOwners">
+                <ScalarProperty Name="Rejected" ColumnName="Rejected" />
                 <ScalarProperty Name="ApprovedTime" ColumnName="ApprovedTime" />
                 <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
                 <ScalarProperty Name="ApprovedByID" ColumnName="ApprovedByID" />
